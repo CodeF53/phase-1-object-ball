@@ -204,6 +204,69 @@ function max(arr){
     return 0;
 }
 
+function playerWithLongestName(){
+    const gameObj=gameObject();
+    const teams=Object.values(gameObj);
+    let playerNames=[];
+    teams.forEach(team=>{
+        const players=team.players;
+        const teamPlayerNames=Object.keys(players);
+        playerNames=playerNames.concat(teamPlayerNames);
+    });
+    let playerWithLongestName=playerNames[0];
+    let longestNameLength=playerWithLongestName.length;
+    for(let i=1; i<playerNames.length;i++){
+        if(playerNames[i].length>longestNameLength){
+            playerWithLongestName=playerNames[i];
+            longestNameLength=playerWithLongestName.length;
+        }
+    }
+    return playerWithLongestName;
+}
+
+function highestSteals(){
+    const gameObj=gameObject();
+    const teams=Object.values(gameObj);
+    let stats=[];
+    teams.forEach(team=>{
+        const players=team.players;
+        const teamStats=Object.values(players);
+        stats.concat(teamStats);
+    });
+    let highestSteals=stats[0].steals;
+    for(let i=0; i<stats.length; i++){
+        const stat=stats[i];
+        if(stat.steals>highestSteals){
+            highestSteals=stat.steals;
+        }
+    }
+    return highestSteals;
+}
+
+function doesLongNameStealATon(){
+    const gameObj=gameObject();
+    const teams=Object.values(gameObj);
+    let players=[];
+    teams.forEach(team=>{
+        const teamPlayers=Object.entries(team.players);
+        players=players.concat(teamPlayers);
+    });
+    let longestNamePlayer=players[0];
+    let longestName=longestNamePlayer[0];
+    let highestSteals=longestNamePlayer[1].steals;
+    for(let i=1;i<players.length;i++){
+        const player=players[i];
+        if(player[0].length>longestName.length){
+            longestNamePlayer=players[i];
+            longestName=longestNamePlayer[0];
+        }
+        if(players[i][1].steals>highestSteals){
+            highestSteals=players[i][1].steals;
+        }
+    }
+    return longestNamePlayer[1].steals>=highestSteals;
+}
+
 function gameObject2(){
     return {
         "home":{
